@@ -14,7 +14,7 @@
     <!-- Button -->
     <p class="card-text"><i class="fas fa-envelope mr-2"></i><%= @user.email %></p>
     <p class="card-text"><i class="fas fa-phone mr-2"></i><%= @profile.phone %></p>
-
+    <%= link_to 'Edit', edit_user_profile_path(@profile), class: "btn default-color white-text" %>
   </div>
 
 </div>
