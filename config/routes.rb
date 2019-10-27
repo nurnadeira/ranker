@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :scores
   resources :skills
   namespace :admin do
       resources :users
