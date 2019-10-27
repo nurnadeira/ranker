@@ -4,6 +4,15 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    unless current_user.signed_in?
+      unless @user == current_user
+        redirect_to new_user_session_path, :alert => "Please sign in first."
+      end
+    end
+    unless current_user.admin?
+      redirect_to user_profile_path
+    end
+
   end
 
   def show
