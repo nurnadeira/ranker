@@ -1,42 +1,65 @@
-
 <% if @scores && current_user.admin? %>
-<div class="card m-3">
-  <!-- Card content -->
-  <div class="card-body">
-
-    <!-- Title -->
-    <h4 class="card-title">Your Evaluation</h4>
-    <!-- Text -->
-    <% @scores.each do |score| %>
+  <div class="card m-3">
+    <div class="card-body">
+      <h4 class="card-title">Total Evaluation</h4>
+      <% @average_scores.each do |name, value| %>
+        <p class="card-text">
+          <%= name %>
+          <span class="float-right">
+            <%= value %>
+            <i class="fas fa-star"></i>
+          </span>
+        </p>
+      <% end%>
+      <% unless @scores.empty? %>
+      <hr>
       <p class="card-text">
-        <%= score.name %>
-        
+        Average Score: 
         <span class="float-right">
-          <%= score.value %>
-          <i class="fas fa-star"></i>
-          <% if score.evaluator == current_user %>
-            <%= link_to(score, method: :delete, data: { confirm: 'Are you sure?' }) do %>
-              <i class="fas fa-trash"></i>
-            <% end %>
-          <% end %>
+          <%= sprintf('%.2f', @average_score) %>
+          <i class="fas fa-star mr-3"></i>
         </span>
       </p>
-      
-    <% end%>
-    <% unless @scores.empty? %>
-    <hr>
-    <p class="card-text">
-      Average Score: 
-      <span class="float-right">
-        <%= sprintf('%.2f', @average_score) %>
-        <i class="fas fa-star mr-3"></i>
-      </span>
-    </p>
-    <% end %>
-    <!-- Button -->
-    <%= render 'scores/form', score: Score.new %>
-
+      <% end %>
+    </div>
   </div>
 
-</div>
+  <div class="card m-3">
+    <div class="card-body">
+      <%= render 'scores/form', score: Score.new  %>
+    </div>
+  </div>
+
+  <% @scores.each do |evaluator, scores| %>
+    <div class="card m-3">
+      <div class="card-body">
+        <h4 class="card-title"><%= evaluator == current_user.id  ? "Your" : User.find(evaluator).name %> evaluation</h4>
+        <% scores.each do |score| %>
+          <p class="card-text">
+            <%= score.name %>
+            <span class="float-right">
+              <%= score.value %>
+              <i class="fas fa-star"></i>
+              <% if score.evaluator == current_user %>
+                <%= link_to(score, method: :delete, data: { confirm: 'Are you sure?' }) do %>
+                  <i class="fas fa-trash"></i>
+                <% end %>
+              <% end %>
+            </span>
+          </p>
+        <% end%>
+        <% unless scores.empty? %>
+        <hr>
+        <p class="card-text">
+          Average Score: 
+          <span class="float-right">
+            <%= sprintf('%.2f', (scores.inject(0) { |sum, n| sum + n.value } / scores.size.to_f) ) %>
+            <i class="fas fa-star mr-3"></i>
+          </span>
+        </p>
+        <% end %>
+        <!-- Button -->
+      </div>
+    </div>
+  <% end %>
 <% end %>

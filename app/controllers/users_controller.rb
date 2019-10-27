@@ -8,7 +8,7 @@ class UsersController < ApplicationController
                   .select("users.id, users.name, avg(scores.value) as average_score")
                   .group("users.id")
                   .order("average_score DESC")
-    @unranked_users = User.includes(:scores).where(role: 'user', scores: {user_id: nil})             
+    @unranked_users = User.includes(:scores).where(role: 'user', scores: {user_id: nil})           
     unless current_user.admin?
       redirect_to user_path(current_user.id)
     end
@@ -18,8 +18,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @profile = @user.user_profile
     @skills = @user.skills
-    @scores = @user.scores
-    @average_score = @scores.average(:value)
+    @scores = @user.scores.group_by(&:evaluator_id)
+
+    # Get average score of each metric, eg. {'Cooperation' => 3.5 }
+    @average_scores = @user.scores.group_by(&:name).map { |key, value| [key, (value.inject(0) { |sum, n| sum + n.value }  / value.size.to_f)]  }.to_h
+    @average_score = @user.scores.average(:value)
   end
 
   def update
