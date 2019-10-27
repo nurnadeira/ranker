@@ -28,7 +28,7 @@ class SkillsController < ApplicationController
 
     respond_to do |format|
       if @skill.save
-        format.html { redirect_to @skill, notice: 'Skill was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Skill was successfully created.' }
         format.json { render :show, status: :created, location: @skill }
       else
         format.html { render :new }
@@ -56,7 +56,7 @@ class SkillsController < ApplicationController
   def destroy
     @skill.destroy
     respond_to do |format|
-      format.html { redirect_to skills_url, notice: 'Skill was successfully destroyed.' }
+      format.html { redirect_to root_path, notice: 'Skill was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

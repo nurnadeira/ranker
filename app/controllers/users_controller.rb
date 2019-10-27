@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @profile = @user.user_profile
+    @skills = @user.skills
   end
 
   def update

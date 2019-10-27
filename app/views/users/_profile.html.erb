@@ -1,0 +1,30 @@
+<% if @profile %>
+<div class="card m-3">
+
+  <!-- Card image -->
+  <%= image_tag "default-avatar.png", class: "card-img-top"%>
+
+  <!-- Card content -->
+  <div class="card-body">
+
+    <!-- Title -->
+    <h4 class="card-title"><%= @profile.name %></h4>
+    <!-- Text -->
+    <p class="card-text"><%= @profile.bio %></p>
+    <!-- Button -->
+    <p class="card-text"><i class="fas fa-envelope mr-2"></i><%= @user.email %></p>
+    <p class="card-text"><i class="fas fa-phone mr-2"></i><%= @profile.phone %></p>
+
+  </div>
+
+</div>
+<% else %>
+<div>
+  <div class="text-center py-5 px-4">
+    <div>
+      <h2 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>You do not have a profile yet</strong></h2>
+      <%= link_to 'Create a Profile', new_user_profile_path, class: "btn default-color btn-lg white-text"  %>
+    </div>
+  </div>
+</div>
+<% end %>

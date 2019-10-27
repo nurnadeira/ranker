@@ -1,0 +1,34 @@
+
+<% if @skills %>
+<div class="card m-3">
+  <!-- Card content -->
+  <div class="card-body">
+
+    <!-- Title -->
+    <h4 class="card-title">Skills</h4>
+    <!-- Text -->
+    <% @skills.each do |skill| %>
+      <p class="card-text">
+        <%= skill.name %>
+        <%= link_to(skill, method: :delete, data: { confirm: 'Are you sure?' }) do %>
+          <i class="fas fa-trash float-right"></i>
+        <% end %>
+      </p>
+      
+    <% end%>
+    <!-- Button -->
+    <%= render 'skills/form', skill: Skill.new %>
+
+  </div>
+
+</div>
+<% else %>
+<div>
+  <div class="card text-center py-5 px-4">
+    <div>
+      <h2 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>You have not added any skills yet</strong></h2>
+      <%= link_to 'Add Skills', new_skill_path, class: "btn default-color btn-lg white-text"  %>
+    </div>
+  </div>
+</div>
+<% end %>
