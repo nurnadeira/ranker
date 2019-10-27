@@ -14,7 +14,9 @@
     <!-- Button -->
     <p class="card-text"><i class="fas fa-envelope mr-2"></i><%= @user.email %></p>
     <p class="card-text"><i class="fas fa-phone mr-2"></i><%= @profile.phone %></p>
-    <%= link_to 'Edit', edit_user_profile_path(@profile), class: "btn default-color white-text" %>
+    <% if current_user == @user %>
+      <%= link_to 'Edit', edit_user_profile_path(@profile), class: "btn default-color white-text" %>
+    <% end %>
   </div>
 
 </div>
@@ -22,8 +24,10 @@
 <div>
   <div class="text-center py-5 px-4">
     <div>
-      <h2 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>You do not have a profile yet</strong></h2>
-      <%= link_to 'Create a Profile', new_user_profile_path, class: "btn default-color btn-lg white-text"  %>
+      <h2 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>There is no profile yet</strong></h2>
+      <% if current_user == @user %>
+        <%= link_to 'Create a Profile', new_user_profile_path, class: "btn default-color btn-lg white-text"  %>
+      <% end %>
     </div>
   </div>
 </div>
