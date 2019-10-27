@@ -28,7 +28,7 @@ class ScoresController < ApplicationController
 
     respond_to do |format|
       if @score.save
-        format.html { redirect_to @score, notice: 'Score was successfully created.' }
+        format.html { redirect_to @score.user, notice: 'Score was successfully created.' }
         format.json { render :show, status: :created, location: @score }
       else
         format.html { render :new }
@@ -54,9 +54,10 @@ class ScoresController < ApplicationController
   # DELETE /scores/1
   # DELETE /scores/1.json
   def destroy
+    user = @score.user
     @score.destroy
     respond_to do |format|
-      format.html { redirect_to scores_url, notice: 'Score was successfully destroyed.' }
+      format.html { redirect_to user, notice: 'Score was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

@@ -13,6 +13,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @profile = @user.user_profile
     @skills = @user.skills
+    @scores = @user.scores
+    @average_score = @scores.average(:value)
   end
 
   def update

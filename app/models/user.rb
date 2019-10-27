@@ -3,6 +3,7 @@ class User < ApplicationRecord
   after_initialize :set_default_role, :if => :new_record?
   has_one :user_profile, dependent: :destroy
   has_many :skills
+  has_many :scores
 
   def set_default_role
     self.role ||= :user

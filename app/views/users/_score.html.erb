@@ -1,0 +1,53 @@
+
+<% if @scores %>
+<div class="card m-3">
+  <!-- Card content -->
+  <div class="card-body">
+
+    <!-- Title -->
+    <h4 class="card-title">Your Evaluation</h4>
+    <!-- Text -->
+    <% @scores.each do |score| %>
+      <p class="card-text">
+        <%= score.name %>
+        
+        <span class="float-right">
+          <%= score.value %>
+          <i class="fas fa-star"></i>
+          <% if score.evaluator == current_user %>
+            <%= link_to(score, method: :delete, data: { confirm: 'Are you sure?' }) do %>
+              <i class="fas fa-trash"></i>
+            <% end %>
+          <% end %>
+        </span>
+      </p>
+      
+    <% end%>
+    <hr>
+    <p class="card-text">
+      Average Score: 
+      <span class="float-right">
+        <%= sprintf('%.2f', @average_score) %>
+        <i class="fas fa-star mr-3"></i>
+      </span>
+    </p>
+    <!-- Button -->
+    <% if current_user.admin? %>
+      <%= render 'scores/form', score: Score.new %>
+    <% end %>
+
+  </div>
+
+</div>
+<% else %>
+<div>
+  <div class="card text-center py-5 px-4 m-3">
+    <div>
+      <h2 class="card-title h1-responsive pt-3 mb-5 font-bold"><strong>There are no scores added yet</strong></h2>
+      <% if true %>
+        <%= link_to 'Add scores', new_score_path, class: "btn default-color btn-lg white-text"  %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% end %>
