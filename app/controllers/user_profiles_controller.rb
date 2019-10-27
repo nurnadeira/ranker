@@ -14,6 +14,7 @@ class UserProfilesController < ApplicationController
 
   # GET /user_profiles/new
   def new
+    @user = current_user
     @user_profile = UserProfile.new
   end
 

@@ -1,27 +1,17 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :admin_only, :except => :show
+  before_action :admin_only, :except => [:show, :index]
 
   def index
     @users = User.all
-    unless current_user.signed_in?
-      unless @user == current_user
-        redirect_to new_user_session_path, :alert => "Please sign in first."
-      end
-    end
     unless current_user.admin?
-      redirect_to user_profile_path
+      redirect_to user_path(current_user.id)
     end
-
   end
 
   def show
     @user = User.find(params[:id])
-    # unless current_user.signed_in?
-    #   unless @user == current_user
-    #     redirect_to new_user_session_path, :alert => "Access denied."
-    #   end
-    # end
+    @profile = @user.user_profile
   end
 
   def update
