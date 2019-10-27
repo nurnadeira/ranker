@@ -14,12 +14,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/css/mdb.min.css" rel="stylesheet">
     <%= javascript_include_tag 'application' %>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.10/js/mdb.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <header>
-      <%= render 'layouts/navigation' %>
-    </header>
+    <%= render 'layouts/navigation' %>
     <main role="main">
        <%= render 'layouts/messages' %>
        <%= yield %>
