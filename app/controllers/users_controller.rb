@@ -3,7 +3,12 @@ class UsersController < ApplicationController
   before_action :admin_only, :except => [:show, :index]
 
   def index
-    @users = User.all
+    @users = User.where(role: 'user')
+                  .joins(:scores)
+                  .select("users.id, users.name, avg(scores.value) as average_score")
+                  .group("users.id")
+                  .order("average_score DESC")
+    @unranked_users = User.includes(:scores).where(role: 'user', scores: {user_id: nil})             
     unless current_user.admin?
       redirect_to user_path(current_user.id)
     end

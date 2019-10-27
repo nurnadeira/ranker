@@ -1,12 +1,20 @@
 <td>
-  <%= link_to user.email, user %>
+  <%= rank %>
 </td>
 <td>
-  <%= form_for(user) do |f| %>
-    <%= f.select(:role, User.roles.keys.map {|role| [role.titleize,role]}) %>
-    <%= f.submit 'Change Role', :class => 'button-xs' %>
+  <%= link_to user&.user_profile&.name, user %>
+</td>
+<td>
+  <% if user.scores.empty? %>
+    Not Evaluated
+  <% else %>
+    <%= sprintf("%.2f", user.average_score) %>
+    <i class="fas fa-star"></i>
   <% end %>
 </td>
 <td>
-  <%= link_to("Delete user", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'button-xs') unless user == current_user %>
+  <%= link_to "Evaluate", user, class: "btn btn-sm default-color white-text" %>
+</td>
+<td>
+  <%= link_to("Delete", user_path(user), :data => { :confirm => "Are you sure?" }, :method => :delete, :class => 'btn btn-sm default-color white-text') unless user == current_user %>
 </td>

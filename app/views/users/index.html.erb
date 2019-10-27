@@ -1,17 +1,25 @@
-<div class="container">
+<div class="container-fluid">
+  <h3>Candidates</h3>
   <div class="row">
-    <h3>Users</h3>
-    <div class="column">
-      <table class="table">
-        <tbody>
-          <% @users.each do |user| %>
-            <tr>
-              <%= render user %>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+    <table class="table">
+      <thead>
+        <th>Rank</th>
+        <th>Name</th>
+        <th>Average Score</th>
+        <th colspan="2">Action</th>
+      </thead>
+      <tbody>
+        <% @users.each_with_index do |user, index| %>
+          <tr>
+            <%= render partial: 'user', locals: {user: user, rank: index+1} %>
+          </tr>
+        <% end %>
+        <% @unranked_users.each do |user| %>
+          <tr>
+            <%= render partial: 'user', locals: {user: user, rank: "-"} %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </div>
-  <p><%= link_to 'Logout', destroy_user_session_path, method: :delete %></p>
 </div>
