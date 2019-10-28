@@ -24,7 +24,13 @@ class ScoresController < ApplicationController
   # POST /scores
   # POST /scores.json
   def create
-    @score = Score.new(score_params)
+    existing_score = Score.where(name: score_params[:name], evaluator_id: score_params[:evaluator_id]).first
+    if existing_score
+      @score = existing_score
+      @score.value = score_params[:value]
+    else
+      @score = Score.new(score_params)
+    end
 
     respond_to do |format|
       if @score.save
