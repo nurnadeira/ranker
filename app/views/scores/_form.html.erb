@@ -18,7 +18,7 @@
 
   <div class="field">
     <%= form.label :value %>
-    <%= form.number_field :value, class: "form-control" %>
+    <%= form.number_field(:value, in: 0..5, class: "form-control", disable: true)   %>
   </div>
 
   <%= form.hidden_field :evaluator_id, value: current_user.id%>
