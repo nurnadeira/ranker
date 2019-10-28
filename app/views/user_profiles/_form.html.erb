@@ -13,27 +13,27 @@
 
   <div class="field">
     <%= form.label :name %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class: "form-control" %>
   </div>
 
   <div class="field">
     <%= form.label :bio %>
-    <%= form.text_area :bio %>
+    <%= form.text_area :bio, class: "form-control" %>
   </div>
 
   <div class="field">
     <%= form.label :experience %>
-    <%= form.text_field :experience %>
+    <%= form.select :experience, [ 'Student', 'Fresh Graduates', 'Junior', 'Senior'], {prompt: 'Select Experience Level'}, {class: "browser-default custom-select"} %>
   </div>
 
   <div class="field">
     <%= form.label :phone %>
-    <%= form.text_field :phone %>
+    <%= form.text_field :phone, class: "form-control" %>
   </div>
 
   <%= form.hidden_field :user_id, value: @user.id%>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Save", class: "btn default-color white-text" %>
   </div>
 <% end %>
